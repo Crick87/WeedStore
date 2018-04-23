@@ -90,17 +90,22 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     progressDialog.dismiss();
-                    // Ok
+                    response.body();
+                    // Start the Home activity
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
                 }else{
                     progressDialog.dismiss();
-                    // No Ok
+                    _loginButton.setEnabled(true);
+                    Toast.makeText(getBaseContext(), "Error al autenticar", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 progressDialog.dismiss();
-                // 404 error
+                _loginButton.setEnabled(true);
+                Toast.makeText(getBaseContext(), "Server error", Toast.LENGTH_LONG).show();
             }
         });
 

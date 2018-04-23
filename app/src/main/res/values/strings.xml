@@ -13,4 +13,8 @@
     <string name="login_member">¿Ya eres miembro? Logeate</string>
     <string name="creating_account">Creando cuenta...</string>
     <string name="name_invalid">Al menos 3 caracteres</string>
+    <string name="title_activity_home">WeedStore</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
