@@ -8,4 +8,9 @@
     <string name="login_error_message">Login error</string>
     <string name="email_invalid">Ingresa un correo válido</string>
     <string name="password_invalid">Entre 4 y 10 caracteres alfanuméricos</string>
+    <string name="name">Nombre</string>
+    <string name="create_account_btn">Crear cuenta</string>
+    <string name="login_member">¿Ya eres miembro? Logeate</string>
+    <string name="creating_account">Creando cuenta...</string>
+    <string name="name_invalid">Al menos 3 caracteres</string>
 </resources>
