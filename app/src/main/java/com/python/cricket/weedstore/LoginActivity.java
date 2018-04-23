@@ -12,8 +12,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.python.cricket.weedstore.interfaces.APIStore;
+import com.python.cricket.weedstore.models.LoginRequest;
+import com.python.cricket.weedstore.models.User;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -24,11 +33,19 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
 
+    APIStore api;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        api = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.139:8080/ventas/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(APIStore.class);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -68,9 +85,26 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement authentication logic here.
+        api.getUser(new LoginRequest(email, password)).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    progressDialog.dismiss();
+                    // Ok
+                }else{
+                    progressDialog.dismiss();
+                    // No Ok
+                }
+            }
 
-        new android.os.Handler().postDelayed(
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                progressDialog.dismiss();
+                // 404 error
+            }
+        });
+
+        /*new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
@@ -78,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 
