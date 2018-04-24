@@ -90,10 +90,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     progressDialog.dismiss();
-                    response.body();
+                    String token = response.body().getToken();
+                    DataApplication.token = token;
+                    // TODO: Save token in SQLite
                     // Start the Home activity
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }else{
                     progressDialog.dismiss();
                     _loginButton.setEnabled(true);
