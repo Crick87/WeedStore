@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         api = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.139:8080/ventas/api/")
+                .baseUrl("http://192.168.43.60:8080/ventas/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(APIStore.class);

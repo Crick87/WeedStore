@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    private CustomersFragment cust_fragment = new CustomersFragment();
+    private CustomerFragment cust_fragment = new CustomerFragment();
     private ProductsFragment prod_fragment = new ProductsFragment();
     private AboutFragment abou_fragment = new AboutFragment();
     private TextView mTextMessage;
