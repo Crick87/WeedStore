@@ -3,12 +3,15 @@ package com.python.cricket.weedstore;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.python.cricket.weedstore.helpers.BottomNavigationViewBehavior;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +30,10 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+
+        BottomNavigationView mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mBottomNavigationView.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());
 
         mViewPager = (ViewPager) findViewById(R.id.homeContainer);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
