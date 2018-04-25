@@ -1,6 +1,7 @@
 package com.python.cricket.weedstore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,12 +10,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.dummy.DummyContent;
 import com.python.cricket.weedstore.dummy.DummyContent.DummyItem;
+import com.python.cricket.weedstore.interfaces.APIStore;
+import com.python.cricket.weedstore.models.Customer;
+import com.python.cricket.weedstore.models.LoginRequest;
+import com.python.cricket.weedstore.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A fragment representing a list of Items.
@@ -28,7 +42,12 @@ public class CustomerFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private CustomerInteractionListener mListener;
+
+    APIStore api;
+    ArrayList<Customer> customer_list = new ArrayList<>();
+    MyCustomerRecyclerViewAdapter mcrva = new MyCustomerRecyclerViewAdapter(customer_list, mListener);
+    RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -51,26 +70,55 @@ public class CustomerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        api = new Retrofit.Builder()
+                .baseUrl(DataApplication.URLAPI)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(APIStore.class);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        customer_list = new ArrayList<Customer>();
+
         View view = inflater.inflate(R.layout.fragment_customer_list, container, false);
+
+        api.getCustomers().enqueue(new Callback<ArrayList<Customer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Customer>> call, Response<ArrayList<Customer>> response) {
+                if(response.isSuccessful()){
+                    customer_list = response.body();
+                    mcrva = new MyCustomerRecyclerViewAdapter(customer_list, mListener);
+                    recyclerView.setAdapter(mcrva);
+                }else{
+                    Toast.makeText(getActivity(), "Response error", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Customer>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Server error", Toast.LENGTH_LONG).show();
+            }
+        });
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyCustomerRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(mcrva);
         }
         return view;
     }
@@ -79,12 +127,7 @@ public class CustomerFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }*/
+        mListener = new CustomerInteractionListener();
     }
 
     @Override
@@ -105,6 +148,17 @@ public class CustomerFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Customer item);
+    }
+
+    public class CustomerInteractionListener implements OnListFragmentInteractionListener{
+
+        @Override
+        public void onListFragmentInteraction(Customer item) {
+            //Toast.makeText(getActivity(), item.getName(), Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getActivity(), CustomerActivity.class);
+            i.putExtra("customerID", Integer.toString(item.getId()));
+            startActivity(i);
+        }
     }
 }

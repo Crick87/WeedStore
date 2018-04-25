@@ -7,21 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.python.cricket.weedstore.CustomerFragment.OnListFragmentInteractionListener;
-import com.python.cricket.weedstore.dummy.DummyContent.DummyItem;
+import com.python.cricket.weedstore.models.Customer;
 
-import java.util.List;
+import java.util.ArrayList;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyCustomerRecyclerViewAdapter extends RecyclerView.Adapter<MyCustomerRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final ArrayList<Customer> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyCustomerRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyCustomerRecyclerViewAdapter(ArrayList<Customer> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +31,8 @@ public class MyCustomerRecyclerViewAdapter extends RecyclerView.Adapter<MyCustom
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getName());
+        holder.mContentView.setText(mValues.get(position).getEmail());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +55,7 @@ public class MyCustomerRecyclerViewAdapter extends RecyclerView.Adapter<MyCustom
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Customer mItem;
 
         public ViewHolder(View view) {
             super(view);

@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_number"
                 android:layout_toRightOf="@id/ivProfilePic"
-                android:textAppearance="?attr/textAppearanceListItem" />
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/aluminum" />
 
         </RelativeLayout>
 
