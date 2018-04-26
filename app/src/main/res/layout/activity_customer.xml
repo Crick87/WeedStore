@@ -111,7 +111,7 @@ tools:context=".CustomerActivity">
                 android:id="@+id/floatingActionButton" />-->
 
         </RelativeLayout>
-        
+
     </RelativeLayout>
 </ScrollView>
 

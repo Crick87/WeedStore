@@ -1,6 +1,9 @@
 package com.python.cricket.weedstore;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
 import com.python.cricket.weedstore.interfaces.APIStore;
 import com.python.cricket.weedstore.models.LoginRequest;
 import com.python.cricket.weedstore.models.User;
@@ -92,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     String token = response.body().getToken();
                     DataApplication.token = token;
-                    // TODO: Save token in SQLite
+                    putTokenInDB();
                     // Start the Home activity
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
@@ -175,4 +179,28 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
+    // Hacemos búsqueda de token en DB
+    public void putTokenInDB() {
+        // Abrimos DB
+        DataSQLiteOpenHelper admin = new DataSQLiteOpenHelper(this,
+                "dataws", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        Cursor fila = bd.rawQuery(
+                "select token from DataWS where id=0", null);
+
+        // update en la base de datos
+        ContentValues registro = new ContentValues();
+        registro.put("token", DataApplication.token);
+        if (fila.moveToFirst()) {
+            bd.update("DataWS", registro, "id=0", null);
+            bd.close();
+        } else{
+            registro.put("id", 0);
+            bd.insert("DataWS", null, registro);
+            bd.close();
+        }
+    }
+
 }
