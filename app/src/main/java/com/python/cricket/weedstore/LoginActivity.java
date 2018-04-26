@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.link_signup) TextView _signupLink;
 
     APIStore api;
+    String email;
+    String password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.authentication_dialog));
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        email = _emailText.getText().toString();
+        password = _passwordText.getText().toString();
 
         api.getUser(new LoginRequest(email, password)).enqueue(new Callback<User>() {
             @Override
@@ -193,6 +195,7 @@ public class LoginActivity extends AppCompatActivity {
         // update en la base de datos
         ContentValues registro = new ContentValues();
         registro.put("token", DataApplication.token);
+        registro.put("user", email);
         if (fila.moveToFirst()) {
             bd.update("DataWS", registro, "id=0", null);
             bd.close();
@@ -202,5 +205,4 @@ public class LoginActivity extends AppCompatActivity {
             bd.close();
         }
     }
-
 }

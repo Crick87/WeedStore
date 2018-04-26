@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    String SQLCreate = "create table DataWS(id integer primary key autoincrement not null, token text)";
+    String SQLCreate = "create table DataWS(id integer primary key autoincrement not null, token text, user text)";
 
     public DataSQLiteOpenHelper(Context context, String nombre, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, nombre, factory, version);

@@ -33,4 +33,7 @@ public interface APIStore {
     @DELETE("/customers")
     Call<Customer> deleteCustomer(@Body Customer customer);
 
+    @POST("test")
+    Call<User> getTest(@Body User user);
+
 }
