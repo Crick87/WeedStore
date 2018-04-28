@@ -8,6 +8,6 @@ public class DataApplication extends Application {
     public static String token = "";
     //public static String URLAPI = "http://192.168.43.59:8080/ventas/api/"; //phone
     //public static String URLAPI = "http://192.168.0.117:8080/ventas/api/"; //crispj
-    public static String URLAPI = "http://192.168.1.68:8080/ventas/api/"; //home
+    public static String URLAPI = "http://192.168.1.75:8080/ventas/api/"; //home
 
 }

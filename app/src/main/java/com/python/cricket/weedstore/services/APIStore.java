@@ -1,4 +1,4 @@
-package com.python.cricket.weedstore.interfaces;
+package com.python.cricket.weedstore.services;
 
 import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.LoginRequest;

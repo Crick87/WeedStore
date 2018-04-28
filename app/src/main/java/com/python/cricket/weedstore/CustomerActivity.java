@@ -4,10 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.python.cricket.weedstore.interfaces.APIStore;
+import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.Customer;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

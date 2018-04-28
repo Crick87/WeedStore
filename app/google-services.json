@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "893188882319",
+    "firebase_url": "https://weedstore-itc.firebaseio.com",
+    "project_id": "weedstore-itc",
+    "storage_bucket": "weedstore-itc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893188882319:android:9f21d15e81dea72b",
+        "android_client_info": {
+          "package_name": "com.python.cricket.weedstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893188882319-je8ie22tg5kabi64reif3091r9eoc70p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARow4M8IxJ66hO5S13lxHDveC13Phm1SU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

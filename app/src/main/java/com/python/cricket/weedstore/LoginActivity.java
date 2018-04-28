@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
-import com.python.cricket.weedstore.interfaces.APIStore;
+import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.LoginRequest;
 import com.python.cricket.weedstore.models.User;
 

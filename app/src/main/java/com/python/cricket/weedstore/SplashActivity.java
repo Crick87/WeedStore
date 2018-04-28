@@ -1,17 +1,14 @@
 package com.python.cricket.weedstore;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
-import com.python.cricket.weedstore.interfaces.APIStore;
-import com.python.cricket.weedstore.models.LoginRequest;
+import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.User;
 
 import retrofit2.Call;
@@ -57,7 +54,11 @@ public class SplashActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Server error", Toast.LENGTH_LONG).show();
+                // On server error:
+                // Start login activity
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                // Close splash activity
+                finish();
             }
         });
     }

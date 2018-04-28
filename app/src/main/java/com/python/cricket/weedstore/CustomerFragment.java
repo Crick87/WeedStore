@@ -10,19 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.python.cricket.weedstore.dummy.DummyContent;
-import com.python.cricket.weedstore.dummy.DummyContent.DummyItem;
-import com.python.cricket.weedstore.interfaces.APIStore;
+import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.Customer;
-import com.python.cricket.weedstore.models.LoginRequest;
-import com.python.cricket.weedstore.models.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
