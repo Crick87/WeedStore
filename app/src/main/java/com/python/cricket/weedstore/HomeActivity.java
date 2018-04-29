@@ -1,5 +1,9 @@
 package com.python.cricket.weedstore;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,8 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
 
 import butterknife.ButterKnife;
 
@@ -17,7 +24,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private CustomerFragment cust_fragment = new CustomerFragment();
     private ProductsFragment prod_fragment = new ProductsFragment();
     private AboutFragment abou_fragment = new AboutFragment();
-    private TextView mTextMessage;
     ViewPager mViewPager;
     BottomNavigationView navigation;
 
@@ -59,6 +65,27 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_logout:
+                resetTokenInDB();
+                // Start the Login activity
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
@@ -71,5 +98,28 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    // Reseteamos token in DB
+    public void resetTokenInDB() {
+        // Abrimos DB
+        DataSQLiteOpenHelper admin = new DataSQLiteOpenHelper(this,
+                "dataws", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        Cursor fila = bd.rawQuery(
+                "select token from DataWS where id=0", null);
+
+        // update en la base de datos
+        ContentValues registro = new ContentValues();
+        registro.put("token", "$thisIsAnInvalidToken");
+        if (fila.moveToFirst()) {
+            bd.update("DataWS", registro, "id=0", null);
+            bd.close();
+        } else{
+            registro.put("id", 0);
+            bd.insert("DataWS", null, registro);
+            bd.close();
+        }
     }
 }

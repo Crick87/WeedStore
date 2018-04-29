@@ -182,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    // Hacemos búsqueda de token en DB
+    // Actualizamos token en DB
     public void putTokenInDB() {
         // Abrimos DB
         DataSQLiteOpenHelper admin = new DataSQLiteOpenHelper(this,
