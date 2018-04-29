@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- Custom push notifications: -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -42,8 +43,7 @@
         -->
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Dark">
-        </activity>
+            android:theme="@style/AppTheme.Dark"></activity>
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
@@ -54,15 +54,16 @@
 
         <service android:name=".services.PushNotification">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service android:name=".services.FirebaseToken">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".CustomerEditActivity"></activity>
     </application>
 
 </manifest>

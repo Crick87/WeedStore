@@ -56,7 +56,7 @@ tools:context=".CustomerActivity">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nombre"
+                    android:text="@string/customer_name"
                     android:textColor="@color/primary"
                     android:textSize="15sp" />
                 <TextView
@@ -71,7 +71,7 @@ tools:context=".CustomerActivity">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Correo"
+                    android:text="@string/customer_email"
                     android:textColor="@color/primary"
                     android:textSize="15sp" />
                 <TextView
@@ -86,7 +86,7 @@ tools:context=".CustomerActivity">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Teléfono"
+                    android:text="@string/customer_phone"
                     android:textColor="@color/primary"
                     android:textSize="15sp" />
                 <TextView

@@ -1,15 +1,14 @@
 package com.python.cricket.weedstore;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.Customer;
+import com.python.cricket.weedstore.services.APIStore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,20 +18,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CustomerActivity extends AppCompatActivity {
+public class CustomerEditActivity extends AppCompatActivity {
 
     APIStore api;
     Customer customer;
 
-    @BindView(R.id.customer_name) TextView cu_name;
-    @BindView(R.id.customer_email) TextView cu_email;
-    @BindView(R.id.customer_phone) TextView cu_phone;
-    @BindView(R.id.fab_cu_edit) FloatingActionButton fab_edit;
+    @BindView(R.id.et_cus_name) EditText et_name;
+    @BindView(R.id.et_cus_email) EditText et_email;
+    @BindView(R.id.et_cus_phone) EditText et_phone;
+    @BindView(R.id.fab_cu_save) FloatingActionButton fab_save;
+    @BindView(R.id.btn_cus_save) Button btn_edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer);
+        setContentView(R.layout.activity_customer_edit);
         ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
@@ -49,9 +49,9 @@ public class CustomerActivity extends AppCompatActivity {
             public void onResponse(Call<Customer> call, Response<Customer> response) {
                 if(response.isSuccessful()){
                     customer = response.body();
-                    cu_name.setText(customer.getName());
-                    cu_email.setText(customer.getEmail());
-                    cu_phone.setText(customer.getPhone());
+                    et_name.setText(customer.getName());
+                    et_email.setText(customer.getEmail());
+                    et_phone.setText(customer.getPhone());
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
@@ -64,13 +64,6 @@ public class CustomerActivity extends AppCompatActivity {
             }
         });
 
-        fab_edit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), CustomerEditActivity.class);
-                i.putExtra("customerID", customerID);
-                startActivity(i);
-            }
-        });
 
     }
 }

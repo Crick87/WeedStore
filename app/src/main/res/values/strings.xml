@@ -18,4 +18,8 @@
     <string name="title_products">Productos</string>
     <string name="title_routes">Rutas</string>
     <string name="customer_details">Detalles del cliente</string>
+    <string name="customer_name">Nombre</string>
+    <string name="customer_email">Correo</string>
+    <string name="customer_phone">Teléfono</string>
+    <string name="save">Guardar</string>
 </resources>
