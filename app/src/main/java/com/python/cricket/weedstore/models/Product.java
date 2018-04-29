@@ -1,12 +1,11 @@
 package com.python.cricket.weedstore.models;
 
-public class Customer {
+public class Product {
 
     private int id;
     private String name;
-    private String phone;
-    private String email;
-    private Latlong latlong;
+    private String description;
+    private double price;
 
     public int getId() {
         return id;
@@ -24,19 +23,20 @@ public class Customer {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getEmail() {
-        return email;
+    public double getPrice() {
+        return price;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPrice(double price) {
+        this.price = price;
     }
+
 }
