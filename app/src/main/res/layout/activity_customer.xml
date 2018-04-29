@@ -153,9 +153,11 @@ tools:context=".CustomerActivity">
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/imageview_account_profile"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="-20dp"
+                android:layout_marginEnd="-10dp"
                 android:layout_marginTop="35dp"
-                android:src="@drawable/edit" />
+                android:src="@drawable/ic_edit_black_24dp"
+                android:tint="@color/primary"
+                app:fabSize="mini" />
 
         </RelativeLayout>
 
