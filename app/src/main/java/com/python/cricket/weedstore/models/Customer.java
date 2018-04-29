@@ -39,4 +39,12 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Latlong getLatlong() {
+        return latlong;
+    }
+
+    public void setLatlong(Latlong latlong) {
+        this.latlong = latlong;
+    }
 }
