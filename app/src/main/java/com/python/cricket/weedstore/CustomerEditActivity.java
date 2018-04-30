@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CustomerEditActivity extends AppCompatActivity {
 
     APIStore api;
-    Customer customer;
+    Customer customer = new Customer();
     Latlong latlong = new Latlong();
 
     @BindView(R.id.et_cus_name) EditText et_name;
@@ -50,43 +50,62 @@ public class CustomerEditActivity extends AppCompatActivity {
                 .build()
                 .create(APIStore.class);
 
-        api.getCustomer(Integer.parseInt(customerID)).enqueue(new Callback<Customer>() {
-            @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
-                if(response.isSuccessful()){
-                    customer = response.body();
-                    et_name.setText(customer.getName());
-                    et_email.setText(customer.getEmail());
-                    et_phone.setText(customer.getPhone());
+        if(!customerID.equals("-1")){
+            api.getCustomer(Integer.parseInt(customerID)).enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    if(response.isSuccessful()){
+                        customer = response.body();
+                        et_name.setText(customer.getName());
+                        et_email.setText(customer.getEmail());
+                        et_phone.setText(customer.getPhone());
 
-                }else{
-                    Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Server error", Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Customer> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Server error", Toast.LENGTH_LONG).show();
+                }
+            });
 
-        fab_save.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saveCustomer();
-            }
-        });
+            fab_save.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    saveCustomer();
+                }
+            });
 
-        btn_save.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saveCustomer();
-            }
-        });
+            btn_save.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    saveCustomer();
+                }
+            });
 
-        fab_delete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //delCustomer();
-            }
-        });
+            fab_delete.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //delCustomer();
+                }
+            });
+
+        }else{
+            fab_delete.setVisibility(View.INVISIBLE);
+
+            fab_save.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    addCustomer();
+                }
+            });
+
+            btn_save.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    addCustomer();
+                }
+            });
+        }
+
+
     }
 
     private void saveCustomer(){
@@ -95,6 +114,30 @@ public class CustomerEditActivity extends AppCompatActivity {
         customer.setPhone(et_phone.getText().toString());
 
         api.updateCustomer(customer).enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Cliente actualizado", Toast.LENGTH_LONG).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Error al actualizar", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Server error, intente más tarde.", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+    }
+
+    private void addCustomer(){
+        customer.setName(et_name.getText().toString());
+        customer.setEmail(et_email.getText().toString());
+        customer.setPhone(et_phone.getText().toString());
+
+        api.createCustomer(customer).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
                 if(response.isSuccessful()){

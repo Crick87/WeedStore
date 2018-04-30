@@ -7,16 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
@@ -26,6 +30,9 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private AboutFragment abou_fragment = new AboutFragment();
     ViewPager mViewPager;
     BottomNavigationView navigation;
+    Integer actualFragment = 0;
+
+    @BindView(R.id.fab_home) FloatingActionButton fab_home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,26 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         });
         mViewPager.addOnPageChangeListener(this);
+
+        fab_home.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                actualFragment = mViewPager.getCurrentItem();
+                switch (actualFragment){
+                    case 0:
+                        Intent i = new Intent(getApplicationContext(), CustomerEditActivity.class);
+                        i.putExtra("customerID", "-1");
+                        startActivity(i);
+                        break;
+                    case 1:
+                        //
+                        break;
+                    case 2:
+                        //
+                        break;
+                }
+            }
+        });
     }
 
     @Override
