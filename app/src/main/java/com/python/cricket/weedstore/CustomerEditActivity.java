@@ -32,6 +32,7 @@ public class CustomerEditActivity extends AppCompatActivity {
     @BindView(R.id.et_cus_email) EditText et_email;
     @BindView(R.id.et_cus_phone) EditText et_phone;
     @BindView(R.id.fab_cu_save) FloatingActionButton fab_save;
+    @BindView(R.id.fab_cu_delete) FloatingActionButton fab_delete;
     @BindView(R.id.btn_cus_save) Button btn_save;
 
     @Override
@@ -80,6 +81,12 @@ public class CustomerEditActivity extends AppCompatActivity {
                 saveCustomer();
             }
         });
+
+        fab_delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //delCustomer();
+            }
+        });
     }
 
     private void saveCustomer(){
@@ -104,5 +111,27 @@ public class CustomerEditActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void delCustomer(){
+
+        api.deleteCustomer(customer).enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Cliente eliminado", Toast.LENGTH_LONG).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Error al eliminar", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Server error, intente más tarde.", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+
     }
 }
