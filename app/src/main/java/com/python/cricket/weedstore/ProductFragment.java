@@ -12,10 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.dummy.DummyContent;
+import com.python.cricket.weedstore.dummy.DummyContent.DummyItem;
 import com.python.cricket.weedstore.models.Customer;
+import com.python.cricket.weedstore.models.Product;
+import com.python.cricket.weedstore.services.APIStore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,30 +33,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class CustomerFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private CustomerInteractionListener mListener;
+    private ProductInteractionListener mListener;
 
     APIStore api;
-    ArrayList<Customer> customer_list = new ArrayList<>();
-    MyCustomerRecyclerViewAdapter mcrva = new MyCustomerRecyclerViewAdapter(customer_list, mListener);
+    ArrayList<Product> product_list = new ArrayList<>();
+    MyProductRecyclerViewAdapter mcrva = new MyProductRecyclerViewAdapter(product_list, mListener);
     RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public CustomerFragment() {
+    public ProductFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static CustomerFragment newInstance(int columnCount) {
-        CustomerFragment fragment = new CustomerFragment();
+    public static ProductFragment newInstance(int columnCount) {
+        ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -79,9 +83,9 @@ public class CustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        customer_list = new ArrayList<Customer>();
+        product_list = new ArrayList<Product>();
 
-        View view = inflater.inflate(R.layout.fragment_customer_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -100,16 +104,16 @@ public class CustomerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        fillCustomers();
+        fillProducts();
     }
 
-    private void fillCustomers() {
-        api.getCustomers().enqueue(new Callback<ArrayList<Customer>>() {
+    private void fillProducts() {
+        api.getProducts().enqueue(new Callback<ArrayList<Product>>() {
             @Override
-            public void onResponse(Call<ArrayList<Customer>> call, Response<ArrayList<Customer>> response) {
+            public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
                 if(response.isSuccessful()){
-                    customer_list = response.body();
-                    mcrva = new MyCustomerRecyclerViewAdapter(customer_list, mListener);
+                    product_list = response.body();
+                    mcrva = new MyProductRecyclerViewAdapter(product_list, mListener);
                     recyclerView.setAdapter(mcrva);
                 }else{
                     Toast.makeText(getActivity(), "Response error", Toast.LENGTH_LONG).show();
@@ -117,7 +121,7 @@ public class CustomerFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Customer>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
                 Toast.makeText(getActivity(), "Server error", Toast.LENGTH_LONG).show();
             }
         });
@@ -126,7 +130,7 @@ public class CustomerFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new CustomerInteractionListener();
+        mListener = new ProductInteractionListener();
     }
 
     @Override
@@ -147,17 +151,17 @@ public class CustomerFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Customer item);
+        void onListFragmentInteraction(Product item);
     }
 
-    public class CustomerInteractionListener implements OnListFragmentInteractionListener{
+    public class ProductInteractionListener implements ProductFragment.OnListFragmentInteractionListener {
 
         @Override
-        public void onListFragmentInteraction(Customer item) {
-            //Toast.makeText(getActivity(), item.getName(), Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getActivity(), CustomerActivity.class);
-            i.putExtra("customerID", Integer.toString(item.getId()));
-            startActivity(i);
+        public void onListFragmentInteraction(Product item) {
+            Toast.makeText(getActivity(), item.getName(), Toast.LENGTH_SHORT).show();
+            /*Intent i = new Intent(getActivity(), ProductActivity.class);
+            i.putExtra("productID", Integer.toString(item.getId()));
+            startActivity(i);*/
         }
     }
 }
