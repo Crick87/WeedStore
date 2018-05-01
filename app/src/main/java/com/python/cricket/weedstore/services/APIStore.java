@@ -34,13 +34,13 @@ public interface APIStore {
     Call<Customer> getCustomer(@Path("id") int id);
 
     @POST("customers")
-    Call<Customer> createCustomer(@Body Customer customer);
+    Call<Boolean> createCustomer(@Body Customer customer);
 
     @PUT("customers")
     Call<Customer> updateCustomer(@Body Customer customer);
 
-    @DELETE("customers")
-    Call<Customer> deleteCustomer(@Body Customer customer);
+    @DELETE("customers/{id}")
+    Call<Customer> deleteCustomer(@Path("id") int id);
 
     // Products
     @GET("products")

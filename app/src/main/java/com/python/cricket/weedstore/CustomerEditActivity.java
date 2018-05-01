@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,6 +113,7 @@ public class CustomerEditActivity extends AppCompatActivity {
         customer.setName(et_name.getText().toString());
         customer.setEmail(et_email.getText().toString());
         customer.setPhone(et_phone.getText().toString());
+        customer.setLatlong(new Latlong());
 
         api.updateCustomer(customer).enqueue(new Callback<Customer>() {
             @Override
@@ -136,20 +138,21 @@ public class CustomerEditActivity extends AppCompatActivity {
         customer.setName(et_name.getText().toString());
         customer.setEmail(et_email.getText().toString());
         customer.setPhone(et_phone.getText().toString());
+        customer.setLatlong(new Latlong());
 
-        api.createCustomer(customer).enqueue(new Callback<Customer>() {
+        api.createCustomer(customer).enqueue(new Callback<Boolean>() {
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Cliente actualizado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Cliente creado", Toast.LENGTH_LONG).show();
                     finish();
                 }else{
-                    Toast.makeText(getApplicationContext(), "Error al actualizar", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error al crear cliente", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server error, intente más tarde.", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -158,7 +161,7 @@ public class CustomerEditActivity extends AppCompatActivity {
 
     private void delCustomer(){
 
-        api.deleteCustomer(customer).enqueue(new Callback<Customer>() {
+        api.deleteCustomer(customer.getId()).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
                 if(response.isSuccessful()){
