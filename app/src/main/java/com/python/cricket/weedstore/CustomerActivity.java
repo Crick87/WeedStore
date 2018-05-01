@@ -23,6 +23,7 @@ public class CustomerActivity extends AppCompatActivity {
 
     APIStore api;
     Customer customer;
+    String customerID;
 
     @BindView(R.id.customer_name) TextView cu_name;
     @BindView(R.id.customer_email) TextView cu_email;
@@ -36,7 +37,7 @@ public class CustomerActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
-        final String customerID = extras.getString("customerID");
+        customerID = extras.getString("customerID");
 
         api = new Retrofit.Builder()
                 .baseUrl(DataApplication.URLAPI)
@@ -44,6 +45,25 @@ public class CustomerActivity extends AppCompatActivity {
                 .build()
                 .create(APIStore.class);
 
+        fab_edit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), CustomerEditActivity.class);
+                i.putExtra("customerID", customerID);
+                startActivity(i);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        fillData();
+
+    }
+
+    private void fillData() {
         api.getCustomer(Integer.parseInt(customerID)).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
@@ -63,14 +83,6 @@ public class CustomerActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Server error", Toast.LENGTH_LONG).show();
             }
         });
-
-        fab_edit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), CustomerEditActivity.class);
-                i.putExtra("customerID", customerID);
-                startActivity(i);
-            }
-        });
-
     }
+
 }

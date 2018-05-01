@@ -84,6 +84,27 @@ public class CustomerFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_customer_list, container, false);
 
+        // Set the adapter
+        if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            recyclerView = (RecyclerView) view;
+            if (mColumnCount <= 1) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+            recyclerView.setAdapter(mcrva);
+        }
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fillCustomers();
+    }
+
+    private void fillCustomers() {
         api.getCustomers().enqueue(new Callback<ArrayList<Customer>>() {
             @Override
             public void onResponse(Call<ArrayList<Customer>> call, Response<ArrayList<Customer>> response) {
@@ -101,21 +122,7 @@ public class CustomerFragment extends Fragment {
                 Toast.makeText(getActivity(), "Server error", Toast.LENGTH_LONG).show();
             }
         });
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(mcrva);
-        }
-        return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
