@@ -1,7 +1,10 @@
 package com.python.cricket.weedstore;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,7 +89,26 @@ public class CustomerEditActivity extends AppCompatActivity {
 
             fab_delete.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //delCustomer();
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(CustomerEditActivity.this, R.style.AppTheme_AlertDialog);
+                    } else {
+                        builder = new AlertDialog.Builder(CustomerEditActivity.this);
+                    }
+                    builder.setTitle("Eliminar cliente")
+                            .setMessage("Seguro que desea eliminar a "+customer.getName()+"?")
+                            .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(getApplicationContext(), "TODO Eliminar", Toast.LENGTH_SHORT).show();
+                                    //delCustomer();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // nothing
+                                }
+                            })
+                            .show();
                 }
             });
 
