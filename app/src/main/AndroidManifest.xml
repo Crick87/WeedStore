@@ -43,7 +43,7 @@
         -->
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Dark"></activity>
+            android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
@@ -63,7 +63,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".CustomerEditActivity"></activity>
+        <activity android:name=".CustomerEditActivity" />
+        <activity android:name=".ProductActivity" />
+        <activity android:name=".ProductEditActivity"></activity>
     </application>
 
 </manifest>

@@ -12,14 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.python.cricket.weedstore.dummy.DummyContent;
-import com.python.cricket.weedstore.dummy.DummyContent.DummyItem;
-import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Product;
 import com.python.cricket.weedstore.services.APIStore;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -158,10 +154,10 @@ public class ProductFragment extends Fragment {
 
         @Override
         public void onListFragmentInteraction(Product item) {
-            Toast.makeText(getActivity(), item.getName(), Toast.LENGTH_SHORT).show();
-            /*Intent i = new Intent(getActivity(), ProductActivity.class);
+            //Toast.makeText(getActivity(), item.getName(), Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getActivity(), ProductActivity.class);
             i.putExtra("productID", Integer.toString(item.getId()));
-            startActivity(i);*/
+            startActivity(i);
         }
     }
 }

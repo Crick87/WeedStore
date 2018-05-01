@@ -55,8 +55,8 @@ public interface APIStore {
     @PUT("products")
     Call<Product> updateProduct(@Body Product product);
 
-    @DELETE("products")
-    Call<Product> deleteProduct(@Body Product product);
+    @DELETE("products/{id}")
+    Call<Product> deleteProduct(@Path("id") int id);
 
     // Orders
     @GET("orders")

@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.python.cricket.weedstore.ProductFragment.OnListFragmentInteractionListener;
-import com.python.cricket.weedstore.dummy.DummyContent.DummyItem;
 import com.python.cricket.weedstore.models.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProductRecyclerViewAdapter.ViewHolder> {
 

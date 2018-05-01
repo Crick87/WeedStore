@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
+import com.python.cricket.weedstore.models.Product;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,12 +77,14 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 actualFragment = mViewPager.getCurrentItem();
                 switch (actualFragment){
                     case 0:
-                        Intent i = new Intent(getApplicationContext(), CustomerEditActivity.class);
-                        i.putExtra("customerID", "-1");
-                        startActivity(i);
+                        Intent i0 = new Intent(getApplicationContext(), CustomerEditActivity.class);
+                        i0.putExtra("customerID", "-1");
+                        startActivity(i0);
                         break;
                     case 1:
-                        //
+                        Intent i1 = new Intent(getApplicationContext(), ProductEditActivity.class);
+                        i1.putExtra("productID", "-1");
+                        startActivity(i1);
                         break;
                     case 2:
                         //
