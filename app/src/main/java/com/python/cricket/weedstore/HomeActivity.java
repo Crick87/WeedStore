@@ -1,6 +1,7 @@
 package com.python.cricket.weedstore;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,15 +12,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
-import com.python.cricket.weedstore.models.Product;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,6 +111,21 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
+                break;
+            case R.id.menu_about:
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this, R.style.AppTheme_AlertDialog);
+                // Get the layout inflater
+                LayoutInflater inflater = HomeActivity.this.getLayoutInflater();
+                // Inflate and set the layout for the dialog
+                // Pass null as the parent view because its going in the dialog layout
+                builder.setView(inflater.inflate(R.layout.about, null))
+                        // Add action buttons
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                //
+                            }
+                        }).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
