@@ -28,6 +28,7 @@ public class CustomerActivity extends AppCompatActivity {
     @BindView(R.id.customer_name) TextView cu_name;
     @BindView(R.id.customer_email) TextView cu_email;
     @BindView(R.id.customer_phone) TextView cu_phone;
+    @BindView(R.id.customer_position) TextView cu_position;
     @BindView(R.id.fab_cu_edit) FloatingActionButton fab_edit;
 
     @Override
@@ -72,6 +73,10 @@ public class CustomerActivity extends AppCompatActivity {
                     cu_name.setText(customer.getName());
                     cu_email.setText(customer.getEmail());
                     cu_phone.setText(customer.getPhone());
+                    cu_position.setText(
+                            "lat: "+customer.getLatlong().getX().toString()+
+                            ", lng: "+customer.getLatlong().getY().toString()
+                    );
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();

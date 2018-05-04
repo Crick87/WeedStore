@@ -37,6 +37,7 @@ public class CustomerEditActivity extends AppCompatActivity {
     @BindView(R.id.et_cus_phone) EditText et_phone;
     @BindView(R.id.fab_cu_save) FloatingActionButton fab_save;
     @BindView(R.id.fab_cu_delete) FloatingActionButton fab_delete;
+    @BindView(R.id.btn_cus_position) Button btn_position;
     @BindView(R.id.btn_cus_save) Button btn_save;
 
     @Override
@@ -78,6 +79,13 @@ public class CustomerEditActivity extends AppCompatActivity {
             fab_save.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     saveCustomer();
+                }
+            });
+
+            btn_position.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(intent);
                 }
             });
 
