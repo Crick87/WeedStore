@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.models.Customer;
@@ -35,6 +36,7 @@ public class CustomerEditActivity extends AppCompatActivity {
     @BindView(R.id.et_cus_name) EditText et_name;
     @BindView(R.id.et_cus_email) EditText et_email;
     @BindView(R.id.et_cus_phone) EditText et_phone;
+    @BindView(R.id.customer_position) TextView cu_position;
     @BindView(R.id.fab_cu_save) FloatingActionButton fab_save;
     @BindView(R.id.fab_cu_delete) FloatingActionButton fab_delete;
     @BindView(R.id.btn_cus_position) Button btn_position;
@@ -65,6 +67,16 @@ public class CustomerEditActivity extends AppCompatActivity {
                         et_email.setText(customer.getEmail());
                         et_phone.setText(customer.getPhone());
 
+                        if (DataApplication.tempLatlong==null){
+                            DataApplication.tempLatlong = new Latlong();
+                            DataApplication.tempLatlong.setX(customer.getLatlong().getX());
+                            DataApplication.tempLatlong.setY(customer.getLatlong().getY());
+                        }
+                        cu_position.setText(
+                                "lat: "+DataApplication.tempLatlong.getX()+
+                                ", lng: "+DataApplication.tempLatlong.getY()
+                        );
+
                     }else{
                         Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
                     }
@@ -84,8 +96,10 @@ public class CustomerEditActivity extends AppCompatActivity {
 
             btn_position.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                    startActivity(intent);
+                    Intent intMap = new Intent(getApplicationContext(), MapsActivity.class);
+                    intMap.putExtra("actualLat", DataApplication.tempLatlong.getX());
+                    intMap.putExtra("actualLong", DataApplication.tempLatlong.getY());
+                    startActivity(intMap);
                 }
             });
 
@@ -121,6 +135,19 @@ public class CustomerEditActivity extends AppCompatActivity {
             });
 
         }else{
+
+            DataApplication.tempLatlong = new Latlong();
+            cu_position.setText("Sin asignar");
+
+            btn_position.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intMap = new Intent(getApplicationContext(), MapsActivity.class);
+                    intMap.putExtra("actualLat", 0);
+                    intMap.putExtra("actualLong", 0);
+                    startActivity(intMap);
+                }
+            });
+
             fab_delete.setVisibility(View.INVISIBLE);
 
             fab_save.setOnClickListener(new View.OnClickListener() {
@@ -136,14 +163,36 @@ public class CustomerEditActivity extends AppCompatActivity {
             });
         }
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(DataApplication.tempLatlong!=null){
+            cu_position.setText(
+                    "lat: "+DataApplication.tempLatlong.getX()+
+                            ", lng: "+DataApplication.tempLatlong.getY()
+            );
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        DataApplication.tempLatlong = null;
+        finish();
     }
 
     private void saveCustomer(){
         customer.setName(et_name.getText().toString());
         customer.setEmail(et_email.getText().toString());
         customer.setPhone(et_phone.getText().toString());
-        customer.setLatlong(new Latlong());
+        Latlong newLatlong = new Latlong();
+        newLatlong.setX(DataApplication.tempLatlong.getX());
+        newLatlong.setY(DataApplication.tempLatlong.getY());
+        customer.setLatlong(newLatlong);
+        DataApplication.tempLatlong = null;
 
         api.updateCustomer(customer).enqueue(new Callback<Customer>() {
             @Override
@@ -168,7 +217,11 @@ public class CustomerEditActivity extends AppCompatActivity {
         customer.setName(et_name.getText().toString());
         customer.setEmail(et_email.getText().toString());
         customer.setPhone(et_phone.getText().toString());
-        customer.setLatlong(new Latlong());
+        Latlong newLatlong = new Latlong();
+        newLatlong.setX(DataApplication.tempLatlong.getX());
+        newLatlong.setY(DataApplication.tempLatlong.getY());
+        customer.setLatlong(newLatlong);
+        DataApplication.tempLatlong = null;
 
         api.createCustomer(customer).enqueue(new Callback<Boolean>() {
             @Override

@@ -23,9 +23,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.python.cricket.weedstore.models.Latlong;
+import com.python.cricket.weedstore.services.APIStore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback,
@@ -38,6 +42,7 @@ public class MapsActivity extends FragmentActivity
     boolean bandGPS  = false;
     boolean bandRED = false;
     double latActual, lonActual, latMarca, lonMarca;
+    Double latCustomer, longCustomer;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     @BindView(R.id.fab_map_ok) FloatingActionButton fab_ok;
@@ -48,7 +53,12 @@ public class MapsActivity extends FragmentActivity
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
 
+        Bundle extras = getIntent().getExtras();
+        latCustomer = extras.getDouble("actualLat");
+        longCustomer = extras.getDouble("actualLong");
+
         if (checkLocationPermission()){
+
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
@@ -56,8 +66,11 @@ public class MapsActivity extends FragmentActivity
 
             fab_ok.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    // TODO: Save position to customer
-                    Toast.makeText(getApplicationContext(),"Ok",Toast.LENGTH_SHORT).show();
+                    DataApplication.tempLatlong = new Latlong();
+                    DataApplication.tempLatlong.setX(latMarca);
+                    DataApplication.tempLatlong.setY(lonMarca);
+                    Toast.makeText(getApplicationContext(),"Ubicación modificada",Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             });
 
@@ -72,8 +85,13 @@ public class MapsActivity extends FragmentActivity
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
 
-        getGeoLocation();
-        LatLng myUbication = new LatLng( latActual , lonActual);
+        if (latCustomer==0 && longCustomer==0){
+            getGeoLocation();
+            latMarca = latActual; lonMarca = lonActual;
+        }else {
+            latMarca = latCustomer; lonMarca = longCustomer;
+        }
+        LatLng myUbication = new LatLng( latMarca , lonMarca);
         marca = mMap.addMarker(new MarkerOptions().position(myUbication).title("Cliente").icon(BitmapDescriptorFactory.fromResource(R.drawable.marky)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myUbication,15));
     }
