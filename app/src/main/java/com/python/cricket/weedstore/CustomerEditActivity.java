@@ -2,6 +2,8 @@ package com.python.cricket.weedstore;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +20,9 @@ import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Latlong;
 import com.python.cricket.weedstore.models.User;
 import com.python.cricket.weedstore.services.APIStore;
+
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,10 +77,25 @@ public class CustomerEditActivity extends AppCompatActivity {
                             DataApplication.tempLatlong.setX(customer.getLatlong().getX());
                             DataApplication.tempLatlong.setY(customer.getLatlong().getY());
                         }
-                        cu_position.setText(
-                                "lat: "+DataApplication.tempLatlong.getX()+
-                                ", lng: "+DataApplication.tempLatlong.getY()
-                        );
+                        try{
+                            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                            List<Address> addresses = geocoder.getFromLocation(
+                                    DataApplication.tempLatlong.getX(),
+                                    DataApplication.tempLatlong.getY(),
+                                    1);
+                            Address ubic = addresses.get(0);
+                            cu_position.setText(
+                                    ubic.getThoroughfare()+" "+
+                                            ubic.getSubThoroughfare()+", "+
+                                            ubic.getSubLocality()+", "+
+                                            ubic.getSubAdminArea()+"."
+                            );
+                        }catch (Exception e){
+                            cu_position.setText(
+                                    "lat: "+DataApplication.tempLatlong.getX()+
+                                    ", lng: "+DataApplication.tempLatlong.getY()
+                            );
+                        }
 
                     }else{
                         Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
@@ -167,10 +187,27 @@ public class CustomerEditActivity extends AppCompatActivity {
         super.onResume();
 
         if(DataApplication.tempLatlong!=null){
-            cu_position.setText(
-                    "lat: "+DataApplication.tempLatlong.getX()+
-                            ", lng: "+DataApplication.tempLatlong.getY()
-            );
+
+            try{
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                List<Address> addresses = geocoder.getFromLocation(
+                        DataApplication.tempLatlong.getX(),
+                        DataApplication.tempLatlong.getY(),
+                        1);
+                Address ubic = addresses.get(0);
+                cu_position.setText(
+                        ubic.getThoroughfare()+" "+
+                                ubic.getSubThoroughfare()+", "+
+                                ubic.getSubLocality()+", "+
+                                ubic.getSubAdminArea()+"."
+                );
+            }catch (Exception e){
+                cu_position.setText(
+                        "lat: "+DataApplication.tempLatlong.getX()+
+                        ", lng: "+DataApplication.tempLatlong.getY()
+                );
+            }
+
         }else {
             cu_position.setText("Sin asignar");
         }

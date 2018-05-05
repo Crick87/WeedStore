@@ -1,6 +1,8 @@
 package com.python.cricket.weedstore;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,9 @@ import android.widget.Toast;
 
 import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.Customer;
+
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,10 +78,26 @@ public class CustomerActivity extends AppCompatActivity {
                     cu_name.setText(customer.getName());
                     cu_email.setText(customer.getEmail());
                     cu_phone.setText(customer.getPhone());
-                    cu_position.setText(
-                            "lat: "+customer.getLatlong().getX().toString()+
-                            ", lng: "+customer.getLatlong().getY().toString()
-                    );
+                    try{
+                        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(
+                                customer.getLatlong().getX(),
+                                customer.getLatlong().getY(),
+                                1);
+                        Address ubic = addresses.get(0);
+                        cu_position.setText(
+                                ubic.getThoroughfare()+" "+
+                                ubic.getSubThoroughfare()+", "+
+                                ubic.getSubLocality()+", "+
+                                ubic.getSubAdminArea()+"."
+                        );
+                    }catch (Exception e){
+                        cu_position.setText(
+                                "lat: "+customer.getLatlong().getX().toString()+
+                                ", lng: "+customer.getLatlong().getY().toString()
+                        );
+                    }
+
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
