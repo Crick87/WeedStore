@@ -136,9 +136,6 @@ public class CustomerEditActivity extends AppCompatActivity {
 
         }else{
 
-            DataApplication.tempLatlong = new Latlong();
-            cu_position.setText("Sin asignar");
-
             btn_position.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intMap = new Intent(getApplicationContext(), MapsActivity.class);
@@ -174,6 +171,8 @@ public class CustomerEditActivity extends AppCompatActivity {
                     "lat: "+DataApplication.tempLatlong.getX()+
                             ", lng: "+DataApplication.tempLatlong.getY()
             );
+        }else {
+            cu_position.setText("Sin asignar");
         }
 
     }
