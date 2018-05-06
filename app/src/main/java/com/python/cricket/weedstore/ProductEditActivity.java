@@ -94,8 +94,7 @@ public class ProductEditActivity extends AppCompatActivity {
                             .setMessage("Seguro que desea eliminar el producto '"+product.getName()+"'?")
                             .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(getApplicationContext(), "TODO Eliminar", Toast.LENGTH_SHORT).show();
-                                    //delProduct();
+                                    delProduct();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -153,9 +152,9 @@ public class ProductEditActivity extends AppCompatActivity {
         product.setDescription(et_description.getText().toString());
         product.setPrice(Double.parseDouble(et_price.getText().toString()));
 
-        api.createProduct(product).enqueue(new Callback<Product>() {
+        api.createProduct(product).enqueue(new Callback<Boolean>() {
             @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Producto creado", Toast.LENGTH_LONG).show();
                     finish();
@@ -165,7 +164,7 @@ public class ProductEditActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<Product> call, Throwable t) {
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server error, intente más tarde.", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -174,11 +173,12 @@ public class ProductEditActivity extends AppCompatActivity {
 
     private void delProduct(){
 
-        api.deleteProduct(product.getId()).enqueue(new Callback<Product>() {
+        api.deleteProduct(product.getId()).enqueue(new Callback<Boolean>() {
             @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Cliente eliminado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Producto eliminado", Toast.LENGTH_LONG).show();
+                    ProductActivity.a.finish();
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Error al eliminar", Toast.LENGTH_LONG).show();
@@ -186,7 +186,7 @@ public class ProductEditActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<Product> call, Throwable t) {
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server error, intente más tarde.", Toast.LENGTH_LONG).show();
                 finish();
             }

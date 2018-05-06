@@ -1,5 +1,6 @@
 package com.python.cricket.weedstore;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductActivity extends AppCompatActivity {
 
+    public static Activity a;
     APIStore api;
     Product product;
     String productID;
@@ -36,6 +38,7 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
+        a=this;
 
         Bundle extras = getIntent().getExtras();
         productID = extras.getString("productID");

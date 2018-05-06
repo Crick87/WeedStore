@@ -50,13 +50,13 @@ public interface APIStore {
     Call<Product> getProduct(@Path("id") int id);
 
     @POST("products")
-    Call<Product> createProduct(@Body Product product);
+    Call<Boolean> createProduct(@Body Product product);
 
     @PUT("products")
     Call<Product> updateProduct(@Body Product product);
 
     @DELETE("products/{id}")
-    Call<Product> deleteProduct(@Path("id") int id);
+    Call<Boolean> deleteProduct(@Path("id") int id);
 
     // Orders
     @GET("orders")
