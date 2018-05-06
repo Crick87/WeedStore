@@ -287,6 +287,7 @@ public class CustomerEditActivity extends AppCompatActivity {
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Cliente eliminado", Toast.LENGTH_LONG).show();
+                    CustomerActivity.a.finish();
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Error al eliminar", Toast.LENGTH_LONG).show();

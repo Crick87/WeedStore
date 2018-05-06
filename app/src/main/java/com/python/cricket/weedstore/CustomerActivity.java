@@ -1,5 +1,6 @@
 package com.python.cricket.weedstore;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -26,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerActivity extends AppCompatActivity {
 
+    public static Activity a;
     APIStore api;
     Customer customer;
     String customerID;
@@ -41,6 +43,7 @@ public class CustomerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer);
         ButterKnife.bind(this);
+        a=this;
 
         Bundle extras = getIntent().getExtras();
         customerID = extras.getString("customerID");
