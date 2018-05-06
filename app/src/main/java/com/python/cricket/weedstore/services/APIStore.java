@@ -40,7 +40,7 @@ public interface APIStore {
     Call<Customer> updateCustomer(@Body Customer customer);
 
     @DELETE("customers/{id}")
-    Call<Customer> deleteCustomer(@Path("id") int id);
+    Call<Boolean> deleteCustomer(@Path("id") int id);
 
     // Products
     @GET("products")

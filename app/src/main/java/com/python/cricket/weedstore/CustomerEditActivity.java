@@ -141,9 +141,8 @@ public class CustomerEditActivity extends AppCompatActivity {
                             .setMessage("Seguro que desea eliminar a "+customer.getName()+"?")
                             .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //delCustomer();
+                                    delCustomer();
                                     // TODO: eliminar actividad anterior
-                                    //Toast.makeText(getApplicationContext(), customer.getName()+" eliminado", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -283,9 +282,9 @@ public class CustomerEditActivity extends AppCompatActivity {
 
     private void delCustomer(){
 
-        api.deleteCustomer(customer.getId()).enqueue(new Callback<Customer>() {
+        api.deleteCustomer(customer.getId()).enqueue(new Callback<Boolean>() {
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Cliente eliminado", Toast.LENGTH_LONG).show();
                     finish();
@@ -295,7 +294,7 @@ public class CustomerEditActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server error, intente más tarde.", Toast.LENGTH_LONG).show();
                 finish();
             }
