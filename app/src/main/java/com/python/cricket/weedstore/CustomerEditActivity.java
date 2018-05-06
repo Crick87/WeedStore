@@ -141,8 +141,9 @@ public class CustomerEditActivity extends AppCompatActivity {
                             .setMessage("Seguro que desea eliminar a "+customer.getName()+"?")
                             .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(getApplicationContext(), "TODO Eliminar", Toast.LENGTH_SHORT).show();
                                     //delCustomer();
+                                    // TODO: eliminar actividad anterior
+                                    //Toast.makeText(getApplicationContext(), customer.getName()+" eliminado", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -254,8 +255,10 @@ public class CustomerEditActivity extends AppCompatActivity {
         customer.setEmail(et_email.getText().toString());
         customer.setPhone(et_phone.getText().toString());
         Latlong newLatlong = new Latlong();
-        newLatlong.setX(DataApplication.tempLatlong.getX());
-        newLatlong.setY(DataApplication.tempLatlong.getY());
+        if (DataApplication.tempLatlong != null){
+            newLatlong.setX(DataApplication.tempLatlong.getX());
+            newLatlong.setY(DataApplication.tempLatlong.getY());
+        }
         customer.setLatlong(newLatlong);
         DataApplication.tempLatlong = null;
 
