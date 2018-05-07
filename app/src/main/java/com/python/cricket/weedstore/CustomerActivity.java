@@ -37,6 +37,7 @@ public class CustomerActivity extends AppCompatActivity {
     @BindView(R.id.customer_phone) TextView cu_phone;
     @BindView(R.id.customer_position) TextView cu_position;
     @BindView(R.id.fab_cu_edit) FloatingActionButton fab_edit;
+    @BindView(R.id.fab_send_email) FloatingActionButton fab_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,17 @@ public class CustomerActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), CustomerEditActivity.class);
                 i.putExtra("customerID", customerID);
                 startActivity(i);
+            }
+        });
+
+        fab_email.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "WeedStore");
+                intent.putExtra(Intent.EXTRA_TEXT, "Hola "+customer.getName()+"!");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{customer.getEmail()});
+                startActivity(intent);
             }
         });
 
