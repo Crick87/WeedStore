@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.python.cricket.weedstore.OrderFragment.OnListFragmentInteractionListener;
+import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Order;
 import com.python.cricket.weedstore.services.APIStore;
 
@@ -18,10 +19,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<Order> mValues;
+    private final ArrayList<Customer> mCustomers;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyOrderRecyclerViewAdapter(ArrayList<Order> items, OnListFragmentInteractionListener listener) {
+    public MyOrderRecyclerViewAdapter(ArrayList<Order> items, ArrayList<Customer> customers, OnListFragmentInteractionListener listener) {
         mValues = items;
+        mCustomers = customers;
         mListener = listener;
     }
 
@@ -35,7 +38,15 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText("Cliente "+mValues.get(position).getId());
+
+        Customer customerT = new Customer();
+        for(int i=0; i<mCustomers.size(); i++){
+            if (mCustomers.get(i).getId() == mValues.get(position).getCustomerId()){
+                customerT = mCustomers.get(i);
+            }
+        }
+
+        holder.mIdView.setText("Orden de "+customerT.getName());
 
         String orderDate = "";
         Order order = mValues.get(position);

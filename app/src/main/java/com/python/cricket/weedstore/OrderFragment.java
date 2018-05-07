@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Order;
 import com.python.cricket.weedstore.services.APIStore;
 
@@ -39,7 +40,8 @@ public class OrderFragment extends Fragment {
 
     APIStore api;
     ArrayList<Order> order_list = new ArrayList<>();
-    MyOrderRecyclerViewAdapter mcrva = new MyOrderRecyclerViewAdapter(order_list, mListener);
+    ArrayList<Customer> customer_list = new ArrayList<>();
+    MyOrderRecyclerViewAdapter mcrva = new MyOrderRecyclerViewAdapter(order_list, customer_list, mListener);
     RecyclerView recyclerView;
 
     /**
@@ -109,8 +111,25 @@ public class OrderFragment extends Fragment {
             public void onResponse(Call<ArrayList<Order>> call, Response<ArrayList<Order>> response) {
                 if(response.isSuccessful()){
                     order_list = response.body();
-                    mcrva = new MyOrderRecyclerViewAdapter(order_list, mListener);
-                    recyclerView.setAdapter(mcrva);
+
+                    api.getCustomers().enqueue(new Callback<ArrayList<Customer>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Customer>> call, Response<ArrayList<Customer>> response) {
+                            if(response.isSuccessful()){
+                                customer_list = response.body();
+                                mcrva = new MyOrderRecyclerViewAdapter(order_list, customer_list, mListener);
+                                recyclerView.setAdapter(mcrva);
+                            }else{
+                                Toast.makeText(getActivity(), "Response error", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Customer>> call, Throwable t) {
+                            Toast.makeText(getActivity(), "Server error", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }else{
                     Toast.makeText(getActivity(), "Response error", Toast.LENGTH_LONG).show();
                 }
