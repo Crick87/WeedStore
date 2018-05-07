@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private CustomerFragment cust_fragment = new CustomerFragment();
     private ProductFragment prod_fragment = new ProductFragment();
-    private AboutFragment abou_fragment = new AboutFragment();
+    private OrderFragment orde_fragment = new OrderFragment();
     ViewPager mViewPager;
     BottomNavigationView navigation;
     Integer actualFragment = 0;
@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                     case 1:
                         return prod_fragment;
                     case 2:
-                        return abou_fragment;
+                        return orde_fragment;
                 }
                 return null;
             }

@@ -2,21 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_customers"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:orderInCategory="0"
         android:title="@string/title_customers" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_products"
         android:icon="@drawable/ic_local_florist_black_24dp"
         android:orderInCategory="1"
         android:title="@string/title_products" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_map_black_24dp"
+        android:id="@+id/navigation_orders"
+        android:icon="@drawable/ic_shopping_cart_black_24dp"
         android:orderInCategory="2"
-        android:title="@string/title_routes" />
+        android:title="@string/orders" />
+
+    <!--<item
+        android:id="@+id/navigation_routes"
+        android:icon="@drawable/ic_map_black_24dp"
+        android:orderInCategory="3"
+        android:title="@string/title_routes" />-->
 
 </menu>

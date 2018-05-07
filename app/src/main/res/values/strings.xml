@@ -23,4 +23,5 @@
     <string name="customer_phone">Teléfono</string>
     <string name="save">Guardar</string>
     <string name="title_activity_maps">WeedStore Mapa</string>
+    <string name="orders">Ordenes</string>
 </resources>

@@ -5,6 +5,24 @@ public class Order {
     private int id;
     private int customerId;
     private boolean status;
+    private Product[] productList;
+    private Date orderDate;
+
+    public com.python.cricket.weedstore.models.Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(com.python.cricket.weedstore.models.Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Product[] getProductList() {
+        return productList;
+    }
+
+    public void setProductList(Product[] productList) {
+        this.productList = productList;
+    }
 
     public int getId() {
         return id;
