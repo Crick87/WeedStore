@@ -1,6 +1,7 @@
 package com.python.cricket.weedstore.services;
 
 import com.python.cricket.weedstore.models.Customer;
+import com.python.cricket.weedstore.models.FireToken;
 import com.python.cricket.weedstore.models.LoginRequest;
 import com.python.cricket.weedstore.models.Order;
 import com.python.cricket.weedstore.models.Product;
@@ -77,5 +78,9 @@ public interface APIStore {
     // Map routes
     @GET("employees/routes/{id}")
     Call<ArrayList<Route>> getEmployeeRoute(@Path("id") int id);
+
+    //Set Firebase token
+    @POST("token")
+    Call<Boolean> addToken(@Body FireToken token);
 
 }
