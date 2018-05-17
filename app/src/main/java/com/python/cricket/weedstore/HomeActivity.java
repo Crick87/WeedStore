@@ -91,9 +91,12 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                         startActivity(i1);
                         break;
                     case 2:
-                        //
+                        // TODO: Add orders.
+                        Toast.makeText(getApplicationContext(), "TO DO: Add orders.", Toast.LENGTH_SHORT).show();
+                        break;
                     case 3:
-                        //
+                        // TODO: Add routes.
+                        Toast.makeText(getApplicationContext(), "TO DO: Add routes.", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
