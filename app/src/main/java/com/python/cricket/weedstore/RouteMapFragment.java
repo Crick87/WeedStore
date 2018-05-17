@@ -154,8 +154,10 @@ public class RouteMapFragment extends Fragment {
 
         @Override
         public void onListFragmentInteraction(Routes item) {
-            Toast.makeText(getActivity(), "Ruta "+item.getIdPath(), Toast.LENGTH_SHORT).show();
-            // TODO: Abrir mapa con ruta
+            //Toast.makeText(getActivity(), "Ruta "+item.getIdPath(), Toast.LENGTH_SHORT).show();
+            Intent intMap = new Intent(getActivity(), MapsActivity.class);
+            intMap.putExtra("routeID", item.getIdPath());
+            startActivity(intMap);
         }
     }
 }

@@ -24,10 +24,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.python.cricket.weedstore.models.Latlong;
+import com.python.cricket.weedstore.models.Route;
 import com.python.cricket.weedstore.services.APIStore;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -36,6 +42,7 @@ public class MapsActivity extends FragmentActivity
         LocationListener,
         GoogleMap.OnMapClickListener{
 
+    APIStore api;
     private GoogleMap mMap;
     private LocationManager locationManager;
     private Marker marca;
@@ -44,6 +51,7 @@ public class MapsActivity extends FragmentActivity
     double latActual, lonActual, latMarca, lonMarca;
     Double latCustomer, longCustomer;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private int routeID = 0;
 
     @BindView(R.id.fab_map_ok) FloatingActionButton fab_ok;
 
@@ -56,6 +64,7 @@ public class MapsActivity extends FragmentActivity
         Bundle extras = getIntent().getExtras();
         latCustomer = extras.getDouble("actualLat");
         longCustomer = extras.getDouble("actualLong");
+        routeID = extras.getInt("routeID");
 
         if (checkLocationPermission()){
 
@@ -64,15 +73,23 @@ public class MapsActivity extends FragmentActivity
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
 
-            fab_ok.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    DataApplication.tempLatlong = new Latlong();
-                    DataApplication.tempLatlong.setX(latMarca);
-                    DataApplication.tempLatlong.setY(lonMarca);
-                    Toast.makeText(getApplicationContext(),"Ubicación modificada",Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            });
+            if( routeID == 0){
+                fab_ok.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        DataApplication.tempLatlong = new Latlong();
+                        DataApplication.tempLatlong.setX(latMarca);
+                        DataApplication.tempLatlong.setY(lonMarca);
+                        Toast.makeText(getApplicationContext(),"Ubicación modificada",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+            }else{
+                fab_ok.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+            }
 
         }else{
             finish();
@@ -85,26 +102,67 @@ public class MapsActivity extends FragmentActivity
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
 
-        if (latCustomer==0 && longCustomer==0){
-            getGeoLocation();
-            latMarca = latActual; lonMarca = lonActual;
-        }else {
-            latMarca = latCustomer; lonMarca = longCustomer;
+        if( routeID == 0){
+            if (latCustomer==0 && longCustomer==0){
+                getGeoLocation();
+                latMarca = latActual; lonMarca = lonActual;
+            }else {
+                latMarca = latCustomer; lonMarca = longCustomer;
+            }
+            LatLng myUbication = new LatLng( latMarca , lonMarca);
+            marca = mMap.addMarker(new MarkerOptions().position(myUbication).title("Cliente").icon(BitmapDescriptorFactory.fromResource(R.drawable.marky)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myUbication,15));
+        }else{
+
+            api = new Retrofit.Builder()
+                    .baseUrl(DataApplication.URLAPI)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(APIStore.class);
+
+            api.getEmployeeRoute(DataApplication.userID).enqueue(new Callback<ArrayList<Route>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Route>> call, Response<ArrayList<Route>> response) {
+                    if(response.isSuccessful()){
+
+                        ArrayList<Route> rutas = response.body();
+                        for( int i=0; i<rutas.size(); i++ ){
+                            if (rutas.get(i).getIdPath() == routeID ){
+                                LatLng mark = new LatLng(
+                                        rutas.get(i).getLatLong().getX(),
+                                        rutas.get(i).getLatLong().getY());
+                                marca = mMap.addMarker(new MarkerOptions().position(mark).title("Cliente").icon(BitmapDescriptorFactory.fromResource(R.drawable.marky)));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mark,13));
+                            }
+                        }
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ArrayList<Route>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Server error", Toast.LENGTH_LONG).show();
+                }
+            });
+
         }
-        LatLng myUbication = new LatLng( latMarca , lonMarca);
-        marca = mMap.addMarker(new MarkerOptions().position(myUbication).title("Cliente").icon(BitmapDescriptorFactory.fromResource(R.drawable.marky)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myUbication,15));
+
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
-        latMarca = latLng.latitude;
-        lonMarca = latLng.longitude;
 
-        if(marca != null) {
-            marca.remove();
+        if( routeID == 0){
+            latMarca = latLng.latitude;
+            lonMarca = latLng.longitude;
+
+            if(marca != null) {
+                marca.remove();
+            }
+            marca = mMap.addMarker(new MarkerOptions().position(latLng).title("Nueva ubicación").icon(BitmapDescriptorFactory.fromResource(R.drawable.marky)));
         }
-        marca = mMap.addMarker(new MarkerOptions().position(latLng).title("Nueva ubicación").icon(BitmapDescriptorFactory.fromResource(R.drawable.marky)));
+
     }
 
     private void getGeoLocation()
