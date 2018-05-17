@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private CustomerFragment cust_fragment = new CustomerFragment();
     private ProductFragment prod_fragment = new ProductFragment();
     private OrderFragment orde_fragment = new OrderFragment();
+    private RouteMapFragment rout_fragment = new RouteMapFragment();
     ViewPager mViewPager;
     BottomNavigationView navigation;
     Integer actualFragment = 0;
@@ -53,13 +54,15 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                         return prod_fragment;
                     case 2:
                         return orde_fragment;
+                    case 3:
+                        return rout_fragment;
                 }
                 return null;
             }
 
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
         });
         navigation = findViewById(R.id.navigation);
@@ -88,6 +91,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                         startActivity(i1);
                         break;
                     case 2:
+                        //
+                    case 3:
                         //
                         break;
                 }

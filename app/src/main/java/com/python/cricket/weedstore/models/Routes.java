@@ -1,8 +1,8 @@
 package com.python.cricket.weedstore.models;
 
-public class Route {
+public class Routes {
     private int idPath;
-    private Latlong latLong;
+    private int noItems;
 
     public int getIdPath() {
         return idPath;
@@ -12,11 +12,11 @@ public class Route {
         this.idPath = idPath;
     }
 
-    public Latlong getLatLong() {
-        return latLong;
+    public int getNoItems() {
+        return noItems;
     }
 
-    public void setLatLong(Latlong latLong) {
-        this.latLong = latLong;
+    public void setNoItems(int noItems) {
+        this.noItems = noItems;
     }
 }

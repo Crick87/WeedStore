@@ -19,10 +19,10 @@
         android:orderInCategory="2"
         android:title="@string/orders" />
 
-    <!--<item
+    <item
         android:id="@+id/navigation_routes"
         android:icon="@drawable/ic_map_black_24dp"
         android:orderInCategory="3"
-        android:title="@string/title_routes" />-->
+        android:title="@string/title_routes" />
 
 </menu>

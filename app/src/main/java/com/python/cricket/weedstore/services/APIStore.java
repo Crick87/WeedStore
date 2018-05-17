@@ -6,10 +6,10 @@ import com.python.cricket.weedstore.models.LoginRequest;
 import com.python.cricket.weedstore.models.Order;
 import com.python.cricket.weedstore.models.Product;
 import com.python.cricket.weedstore.models.User;
+import com.python.cricket.weedstore.models.Route;
 
 import java.util.ArrayList;
 
-import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     String token = response.body().getToken();
                     DataApplication.token = token;
+                    DataApplication.userID = response.body().getId();
                     putTokenInDB();
                     // Start the Home activity
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);

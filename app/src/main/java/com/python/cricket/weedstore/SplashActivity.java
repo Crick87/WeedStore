@@ -41,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
+                    DataApplication.userID = response.body().getId();
                     // Start home activity
                     startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                     // Close splash activity
