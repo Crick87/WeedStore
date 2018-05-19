@@ -77,17 +77,17 @@ public class MyRouteMapRecyclerViewAdapter extends RecyclerView.Adapter<MyRouteM
         int noItems = 0;
         for( int i=0; i<routes.size(); i++ ){
             if ( i == 0 )
-                idRoute = routes.get(i).getIdPath();
-            if( idRoute == routes.get(i).getIdPath() ){
+                idRoute = routes.get(i).getIdRoute();
+            if( idRoute == routes.get(i).getIdRoute() ){
                 noItems++;
             }
-            if( idRoute != routes.get(i).getIdPath() || (i+1)==routes.size() ){
+            if( idRoute != routes.get(i).getIdRoute() || (i+1)==routes.size() ){
                 Routes route = new Routes();
                 route.setIdPath(idRoute);
                 route.setNoItems(noItems);
                 routesList.add(route);
 
-                idRoute = routes.get(i).getIdPath();
+                idRoute = routes.get(i).getIdRoute();
                 noItems = 1;
             }
         }

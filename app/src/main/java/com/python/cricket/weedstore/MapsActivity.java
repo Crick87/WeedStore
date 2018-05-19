@@ -127,7 +127,7 @@ public class MapsActivity extends FragmentActivity
 
                         ArrayList<Route> rutas = response.body();
                         for( int i=0; i<rutas.size(); i++ ){
-                            if (rutas.get(i).getIdPath() == routeID ){
+                            if (rutas.get(i).getIdRoute() == routeID ){
                                 LatLng mark = new LatLng(
                                         rutas.get(i).getLatLong().getX(),
                                         rutas.get(i).getLatLong().getY());
