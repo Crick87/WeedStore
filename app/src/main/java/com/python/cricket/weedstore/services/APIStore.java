@@ -76,7 +76,7 @@ public interface APIStore {
     Call<Order> deleteOrder(@Body Order order);
 
     // Map routes
-    @GET("employees/routes/{id}")
+    @GET("users/routes/{id}")
     Call<ArrayList<Route>> getEmployeeRoute(@Path("id") int id);
 
     //Set Firebase token
