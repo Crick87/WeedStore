@@ -20,6 +20,7 @@ import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Latlong;
 import com.python.cricket.weedstore.models.User;
 import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerEditActivity extends AppCompatActivity {
 
+    RetrofitMan rf;
     APIStore api;
     Customer customer = new Customer();
     Latlong latlong = new Latlong();
@@ -56,11 +58,8 @@ public class CustomerEditActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String customerID = extras.getString("customerID");
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(this);
+        api = rf.get();
 
         if(!customerID.equals("-1")){
             api.getCustomer(Integer.parseInt(customerID)).enqueue(new Callback<Customer>() {

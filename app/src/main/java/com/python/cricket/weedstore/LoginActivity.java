@@ -19,6 +19,7 @@ import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
 import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.LoginRequest;
 import com.python.cricket.weedstore.models.User;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
 
+    RetrofitMan rf;
     APIStore api;
     String email;
     String password;
@@ -47,11 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(this);
+        api = rf.get();
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 

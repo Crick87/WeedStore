@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.python.cricket.weedstore.models.Route;
 import com.python.cricket.weedstore.models.Routes;
 import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class RouteMapFragment extends Fragment {
     private int mColumnCount = 1;
     private RouteMapInteractionListener mListener;
 
+    RetrofitMan rf;
     APIStore api;
     ArrayList<Route> route_list = new ArrayList<>();
     MyRouteMapRecyclerViewAdapter mcrva = new MyRouteMapRecyclerViewAdapter(route_list, mListener);
@@ -64,11 +66,8 @@ public class RouteMapFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(getActivity());
+        api = rf.get();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);

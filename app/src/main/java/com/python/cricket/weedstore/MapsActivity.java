@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.python.cricket.weedstore.models.Latlong;
 import com.python.cricket.weedstore.models.Route;
 import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public class MapsActivity extends FragmentActivity
         LocationListener,
         GoogleMap.OnMapClickListener{
 
+    RetrofitMan rf;
     APIStore api;
     private GoogleMap mMap;
     private LocationManager locationManager;
@@ -114,11 +116,8 @@ public class MapsActivity extends FragmentActivity
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myUbication,15));
         }else{
 
-            api = new Retrofit.Builder()
-                    .baseUrl(DataApplication.URLAPI)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(APIStore.class);
+            rf.init(this);
+            api = rf.get();
 
             api.getEmployeeRoute(DataApplication.userID).enqueue(new Callback<ArrayList<Route>>() {
                 @Override

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.Customer;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,12 +23,11 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerActivity extends AppCompatActivity {
 
     public static Activity a;
+    RetrofitMan rf;
     APIStore api;
     Customer customer;
     String customerID;
@@ -49,11 +49,8 @@ public class CustomerActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         customerID = extras.getString("customerID");
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(this);
+        api = rf.get();
 
         fab_edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Order;
 import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class OrderFragment extends Fragment {
     private int mColumnCount = 1;
     private OrderInteractionListener mListener;
 
+    RetrofitMan rf;
     APIStore api;
     ArrayList<Order> order_list = new ArrayList<>();
     ArrayList<Customer> customer_list = new ArrayList<>();
@@ -65,11 +67,8 @@ public class OrderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(getActivity());
+        api = rf.get();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);

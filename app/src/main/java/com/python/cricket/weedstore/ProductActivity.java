@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Product;
 import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProductActivity extends AppCompatActivity {
 
     public static Activity a;
+    RetrofitMan rf;
     APIStore api;
     Product product;
     String productID;
@@ -43,11 +45,8 @@ public class ProductActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         productID = extras.getString("productID");
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(this);
+        api = rf.get();
 
         fab_edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
 import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.User;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SplashActivity extends AppCompatActivity {
 
+    RetrofitMan rf;
     APIStore api;
 
     @Override
@@ -27,11 +29,8 @@ public class SplashActivity extends AppCompatActivity {
 
         getTokenInDB();
 
-        api = new Retrofit.Builder()
-                .baseUrl(DataApplication.URLAPI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIStore.class);
+        rf.init(this);
+        api = rf.get();
 
         User user = new User();
         user.setUsername(DataApplication.lastUser);
