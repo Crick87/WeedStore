@@ -60,9 +60,9 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
         }else if (order.getProductList().length == 1){
             orderDate += "1 producto • ";
         }
-        orderDate += order.getOrderDate().getDayOfMonth()+"/"+
-                order.getOrderDate().getMonthValue()+"/"+
-                order.getOrderDate().getYear();
+        orderDate += order.getOrderdate().getDayOfMonth()+"/"+
+                order.getOrderdate().getMonthValue()+"/"+
+                order.getOrderdate().getYear();
 
         holder.mContentView.setText(orderDate);
 

@@ -4,17 +4,11 @@ public class Order {
 
     private int id;
     private int customerId;
+    private int employeeId;
     private boolean status;
     private Product[] productList;
-    private Date orderDate;
+    private Date orderdate;
 
-    public com.python.cricket.weedstore.models.Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(com.python.cricket.weedstore.models.Date orderDate) {
-        this.orderDate = orderDate;
-    }
 
     public Product[] getProductList() {
         return productList;
@@ -38,6 +32,22 @@ public class Order {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Date getOrderdate() {
+        return orderdate;
+    }
+
+    public void setOrderdate(Date orderdate) {
+        this.orderdate = orderdate;
     }
 
     public boolean isStatus() {
