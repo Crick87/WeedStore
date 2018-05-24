@@ -113,6 +113,71 @@
                         android:textSize="18sp"
                         android:layout_marginBottom="10dp" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="Agregar al carrito"
+                        android:textColor="@color/primary"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/fab_less"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:paddingBottom="10dp"
+                            android:src="@drawable/ic_remove_black_24dp"
+                            android:tint="@color/primary"
+                            app:backgroundTint="@color/iron"
+                            app:elevation="0dp"
+                            app:fabSize="mini"
+                            app:rippleColor="@color/accent2" />
+
+                        <TextView
+                            android:id="@+id/product_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center_vertical|fill_vertical"
+                            android:text="0"
+                            android:textColor="@color/primary_darker"
+                            android:textSize="18sp" />
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/fab_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:paddingBottom="10dp"
+                            android:src="@drawable/ic_add_black_24dp"
+                            android:tint="@color/primary"
+                            app:backgroundTint="@color/iron"
+                            app:elevation="0dp"
+                            app:fabSize="mini"
+                            app:rippleColor="@color/accent2" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_basket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:layout_marginBottom="30dp"
+                        android:backgroundTint="@color/primary"
+                        android:text="Agregar"
+                        android:textColor="@color/accent2" />
+
 
                 </LinearLayout>
             </LinearLayout>
