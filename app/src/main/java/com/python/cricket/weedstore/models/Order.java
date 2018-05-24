@@ -2,7 +2,7 @@ package com.python.cricket.weedstore.models;
 
 public class Order {
 
-    private int id;
+    private int orderId;
     private int customerId;
     private int employeeId;
     private boolean status;
@@ -18,12 +18,12 @@ public class Order {
         this.productList = productList;
     }
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getCustomerId() {

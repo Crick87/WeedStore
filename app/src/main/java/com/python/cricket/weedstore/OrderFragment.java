@@ -172,9 +172,9 @@ public class OrderFragment extends Fragment {
 
         @Override
         public void onListFragmentInteraction(Order item) {
-            //Intent i = new Intent(getActivity(), OrderActivity.class);
-            //i.putExtra("productID", Integer.toString(item.getId()));
-            //startActivity(i);
+            Intent i = new Intent(getActivity(), OrderActivity.class);
+            i.putExtra("orderID", Integer.toString(item.getOrderId()));
+            startActivity(i);
         }
     }
 }
