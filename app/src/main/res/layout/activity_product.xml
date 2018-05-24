@@ -98,6 +98,21 @@
                         android:textSize="18sp"
                         android:layout_marginBottom="10dp" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Stock"
+                        android:textColor="@color/primary"
+                        android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/product_stock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cargando stock..."
+                        android:textColor="@color/primary_darker"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="10dp" />
+
 
                 </LinearLayout>
             </LinearLayout>

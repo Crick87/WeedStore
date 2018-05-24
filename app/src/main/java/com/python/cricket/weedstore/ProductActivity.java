@@ -33,6 +33,7 @@ public class ProductActivity extends AppCompatActivity {
     @BindView(R.id.product_name) TextView prod_name;
     @BindView(R.id.product_description) TextView prod_description;
     @BindView(R.id.product_price) TextView prod_price;
+    @BindView(R.id.product_stock) TextView prod_stock;
     @BindView(R.id.fab_cu_edit) FloatingActionButton fab_edit;
 
     @Override
@@ -74,6 +75,7 @@ public class ProductActivity extends AppCompatActivity {
                     prod_name.setText(product.getName());
                     prod_description.setText(product.getDescription());
                     prod_price.setText(Double.toString(product.getPrice()));
+                    prod_stock.setText(Integer.toString(product.getStock()));
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Response error", Toast.LENGTH_LONG).show();
