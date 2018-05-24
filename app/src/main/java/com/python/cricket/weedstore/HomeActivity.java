@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,6 +66,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 return 4;
             }
         });
+        mViewPager.addOnPageChangeListener(listener);
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -102,6 +104,39 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         });
     }
+
+    /////
+    private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            //Log.d("lorem", "1 - "+position);
+        }
+        @Override
+        public void onPageSelected(int position) {
+            switch (position) {
+                case 0:
+                    fab_home.setImageResource(R.drawable.ic_add_black_24dp);
+                    fab_home.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    fab_home.setImageResource(R.drawable.ic_add_black_24dp);
+                    fab_home.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    fab_home.setImageResource(R.drawable.basket);
+                    fab_home.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    fab_home.setVisibility(View.INVISIBLE);
+                    break;
+            }
+        }
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            //Log.d("lorem", "3 - "+state);
+        }
+    };
+    /////
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
