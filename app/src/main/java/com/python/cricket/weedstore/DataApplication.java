@@ -22,7 +22,7 @@ public class DataApplication extends Application {
     public static boolean addBasket( Product item ){
         for (int i=0; i<basketList.length; i++){
             if ( basketList[i].getId() == item.getId() ){
-                basketList[i].setQuanity(item.getQuanity());
+                basketList[i].setQuantity(item.getQuantity());
                 return true;
             }
         }

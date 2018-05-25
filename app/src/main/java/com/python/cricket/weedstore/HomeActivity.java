@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,8 +92,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                         startActivity(i1);
                         break;
                     case 2:
-                        // TODO: Add orders.
-                        Toast.makeText(getApplicationContext(), "TO DO: Add orders.", Toast.LENGTH_SHORT).show();
+                        Intent i2 = new Intent(getApplicationContext(), BasketActivity.class);
+                        startActivity(i2);
                         break;
                     case 3:
                         // TODO: Add routes.

@@ -7,7 +7,7 @@ public class Product {
     private String description;
     private double price;
     private int stock;
-    private int quanity;
+    private int quantity;
 
     public int getId() {
         return id;
@@ -49,11 +49,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public int getQuanity() {
-        return quanity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuanity(int quanity) {
-        this.quanity = quanity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

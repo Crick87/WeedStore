@@ -86,8 +86,9 @@ public class ProductActivity extends AppCompatActivity {
         btn_basket.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(quantity > 0){
-                    product.setQuanity(quantity);
+                    product.setQuantity(quantity);
                     DataApplication.addBasket(product);
+                    Toast.makeText(getApplicationContext(), product.getName()+" agregados ("+quantity+")", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -127,7 +128,7 @@ public class ProductActivity extends AppCompatActivity {
     private void checkBasket(){
         for (int i=0; i<DataApplication.basketList.length; i++){
             if ( DataApplication.basketList[i].getId() == Integer.parseInt(productID) ){
-                quantity = DataApplication.basketList[i].getQuanity();
+                quantity = DataApplication.basketList[i].getQuantity();
                 prod_quantity.setText(Integer.toString(quantity));
             }
         }
