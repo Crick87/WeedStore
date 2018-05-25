@@ -67,7 +67,7 @@ public interface APIStore {
     Call<Order> getOrder(@Path("id") int id);
 
     @POST("orders")
-    Call<Order> createOrder(@Body Order order);
+    Call<Boolean> createOrder(@Body Order order);
 
     @PUT("orders")
     Call<Order> updateOrder(@Body Order order);
