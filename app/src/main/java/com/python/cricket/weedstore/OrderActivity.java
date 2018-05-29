@@ -19,7 +19,6 @@ import retrofit2.Response;
 
 public class OrderActivity extends AppCompatActivity {
 
-    RetrofitMan rf;
     APIStore api;
     Order order;
     String orderID;
@@ -40,8 +39,7 @@ public class OrderActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         orderID = extras.getString("orderID");
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
     }
 
     @Override

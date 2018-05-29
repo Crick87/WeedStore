@@ -7,20 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.auth0.android.jwt.JWT;
+
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
 import com.python.cricket.weedstore.services.APIStore;
 import com.python.cricket.weedstore.models.User;
 import com.python.cricket.weedstore.services.RetrofitMan;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SplashActivity extends AppCompatActivity {
 
-    RetrofitMan rf;
     APIStore api;
 
     @Override
@@ -29,14 +25,30 @@ public class SplashActivity extends AppCompatActivity {
 
         getTokenInDB();
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         User user = new User();
         user.setUsername(DataApplication.lastUser);
         user.setToken(DataApplication.token);
 
-        api.getTest(user).enqueue(new Callback<User>() {
+        String token = DataApplication.token;
+        android.content.Context mContext = this;
+        if (token != null) {
+            if (!(new JWT(token).isExpired(10))) {
+                mContext.startActivity(new Intent(mContext, HomeActivity.class));
+                finish();
+            }
+            else {
+                Toast.makeText(mContext, "Token expirado", Toast.LENGTH_LONG).show();
+                mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                finish();
+            }
+        } else {
+            mContext.startActivity(new Intent(mContext, LoginActivity.class));
+            finish();
+        }
+
+        /*api.getTest(user).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
@@ -60,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
                 // Close splash activity
                 finish();
             }
-        });
+        });*/
     }
 
     // Obtenemos el token de la DB

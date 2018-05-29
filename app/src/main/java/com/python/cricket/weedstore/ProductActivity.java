@@ -26,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProductActivity extends AppCompatActivity {
 
     public static Activity a;
-    RetrofitMan rf;
     APIStore api;
     Product product;
     int quantity=0;
@@ -54,8 +53,7 @@ public class ProductActivity extends AppCompatActivity {
 
         checkBasket();
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         fab_edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

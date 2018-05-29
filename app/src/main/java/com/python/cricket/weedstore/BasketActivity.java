@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.birbit.android.jobqueue.JobManager;
 import com.python.cricket.weedstore.models.Customer;
 import com.python.cricket.weedstore.models.Order;
 import com.python.cricket.weedstore.models.Product;
 import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.BasketJob;
 import com.python.cricket.weedstore.services.RetrofitMan;
 
 import java.util.ArrayList;
@@ -25,10 +27,10 @@ import retrofit2.Response;
 
 public class BasketActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    RetrofitMan rf;
     APIStore api;
     ArrayList<Customer> customer_list = new ArrayList<>();
     int custID;
+    private JobManager jobManager;
 
     @BindView(R.id.customer_select) Spinner customer;
     @BindView(R.id.btn_create_basket) Button btn_create;
@@ -38,9 +40,9 @@ public class BasketActivity extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
         ButterKnife.bind(this);
+        jobManager = DataApplication.getInstance().getJobManager();
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         customer.setOnItemSelectedListener(this);
 
@@ -87,10 +89,19 @@ public class BasketActivity extends AppCompatActivity implements AdapterView.OnI
                     Toast.makeText(getApplicationContext(), "Orden creada", Toast.LENGTH_LONG).show();
                     DataApplication.basketList = new Product[0];
                     finish();
-                }else{
+                }else if (response.code()==504)
+                {
+                    jobManager.addJobInBackground(new BasketJob(order));
+                    Toast.makeText(getApplicationContext(), "Orden en espera", Toast.LENGTH_LONG).show();
+                    DataApplication.basketList = new Product[0];
+                    finish();
+                }
+                else{
+
                     Toast.makeText(getApplicationContext(), "Error al crear orden", Toast.LENGTH_LONG).show();
                     finish();
                 }
+
             }
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {

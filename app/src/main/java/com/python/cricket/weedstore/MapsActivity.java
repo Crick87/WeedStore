@@ -43,7 +43,6 @@ public class MapsActivity extends FragmentActivity
         LocationListener,
         GoogleMap.OnMapClickListener{
 
-    RetrofitMan rf;
     APIStore api;
     private GoogleMap mMap;
     private LocationManager locationManager;
@@ -116,8 +115,7 @@ public class MapsActivity extends FragmentActivity
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myUbication,15));
         }else{
 
-            rf.init(this);
-            api = rf.get();
+            api = RetrofitMan.get();
 
             api.getEmployeeRoute(DataApplication.userID).enqueue(new Callback<ArrayList<Route>>() {
                 @Override

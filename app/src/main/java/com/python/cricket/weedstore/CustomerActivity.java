@@ -27,7 +27,6 @@ import retrofit2.Response;
 public class CustomerActivity extends AppCompatActivity {
 
     public static Activity a;
-    RetrofitMan rf;
     APIStore api;
     Customer customer;
     String customerID;
@@ -49,8 +48,7 @@ public class CustomerActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         customerID = extras.getString("customerID");
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         fab_edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

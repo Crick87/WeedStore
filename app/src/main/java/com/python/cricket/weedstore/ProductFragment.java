@@ -38,7 +38,6 @@ public class ProductFragment extends Fragment {
     private int mColumnCount = 1;
     private ProductInteractionListener mListener;
 
-    RetrofitMan rf;
     APIStore api;
     ArrayList<Product> product_list = new ArrayList<>();
     MyProductRecyclerViewAdapter mcrva = new MyProductRecyclerViewAdapter(product_list, mListener);
@@ -65,8 +64,7 @@ public class ProductFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rf.init(getActivity());
-        api = rf.get();
+        api = RetrofitMan.get();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -78,7 +76,6 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        product_list = new ArrayList<Product>();
 
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 

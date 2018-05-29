@@ -39,7 +39,6 @@ public class OrderFragment extends Fragment {
     private int mColumnCount = 1;
     private OrderInteractionListener mListener;
 
-    RetrofitMan rf;
     APIStore api;
     ArrayList<Order> order_list = new ArrayList<>();
     ArrayList<Customer> customer_list = new ArrayList<>();
@@ -67,8 +66,7 @@ public class OrderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rf.init(getActivity());
-        api = rf.get();
+        api = RetrofitMan.get();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);

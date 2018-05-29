@@ -41,6 +41,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
+    implementation 'com.birbit:android-priority-jobqueue:2.0.0'
+    implementation 'com.auth0.android:jwtdecode:1.1.1'
 
 }
 

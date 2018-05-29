@@ -35,7 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerEditActivity extends AppCompatActivity {
 
-    RetrofitMan rf;
     APIStore api;
     Customer customer = new Customer();
     Latlong latlong = new Latlong();
@@ -58,8 +57,7 @@ public class CustomerEditActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String customerID = extras.getString("customerID");
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         if(!customerID.equals("-1")){
             api.getCustomer(Integer.parseInt(customerID)).enqueue(new Callback<Customer>() {

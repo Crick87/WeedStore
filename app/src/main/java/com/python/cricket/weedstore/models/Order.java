@@ -1,6 +1,8 @@
 package com.python.cricket.weedstore.models;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
 
     private int orderId;
     private int customerId;

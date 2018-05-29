@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
 
-    RetrofitMan rf;
     APIStore api;
     String email;
     String password;
@@ -49,8 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 

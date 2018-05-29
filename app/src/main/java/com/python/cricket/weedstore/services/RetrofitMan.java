@@ -22,10 +22,25 @@ public class RetrofitMan {
 
     public static void init(Context context)
     {
+        java.io.File httpCacheDirectory = new java.io.File(context.getCacheDir(), "httpCache");
+        okhttp3.Cache cache = new okhttp3.Cache(httpCacheDirectory, 50 * 1024 * 1024);
+
         String url = DataApplication.URLAPI;
         if(mRetrofits == null) {
 
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.cache(cache)
+            .addInterceptor(chain -> {
+                try {
+                    return chain.proceed(chain.request());
+                } catch (Exception e) {
+                    Request offlineRequest = chain.request().newBuilder()
+                            .header("Cache-Control", "public, only-if-cached," +
+                                    "max-stale=" + 60 * 60 * 24)
+                            .build();
+                    return chain.proceed(offlineRequest);
+                }
+            });
 
             // For token
             String token = DataApplication.token;

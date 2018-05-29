@@ -21,12 +21,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.python.cricket.weedstore.helpers.DataSQLiteOpenHelper;
+import com.python.cricket.weedstore.models.User;
+import com.python.cricket.weedstore.services.APIStore;
+import com.python.cricket.weedstore.services.RetrofitMan;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
+    APIStore api;
     private CustomerFragment cust_fragment = new CustomerFragment();
     private ProductFragment prod_fragment = new ProductFragment();
     private OrderFragment orde_fragment = new OrderFragment();
@@ -101,6 +108,21 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                         break;
                 }
             }
+        });
+
+        api = RetrofitMan.get();
+        User user = new User();
+        user.setUsername(DataApplication.lastUser);
+        user.setToken(DataApplication.token);
+        api.getTest(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    DataApplication.userID = response.body().getId();
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {}
         });
     }
 

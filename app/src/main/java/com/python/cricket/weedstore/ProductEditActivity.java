@@ -25,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductEditActivity extends AppCompatActivity {
 
-    RetrofitMan rf;
     APIStore api;
     Product product = new Product();
 
@@ -45,8 +44,7 @@ public class ProductEditActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String productID = extras.getString("productID");
 
-        rf.init(this);
-        api = rf.get();
+        api = RetrofitMan.get();
 
         if(!productID.equals("-1")){
             api.getProduct(Integer.parseInt(productID)).enqueue(new Callback<Product>() {

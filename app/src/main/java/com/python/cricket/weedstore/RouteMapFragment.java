@@ -39,7 +39,6 @@ public class RouteMapFragment extends Fragment {
     private int mColumnCount = 1;
     private RouteMapInteractionListener mListener;
 
-    RetrofitMan rf;
     APIStore api;
     ArrayList<Route> route_list = new ArrayList<>();
     MyRouteMapRecyclerViewAdapter mcrva = new MyRouteMapRecyclerViewAdapter(route_list, mListener);
@@ -66,8 +65,7 @@ public class RouteMapFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rf.init(getActivity());
-        api = rf.get();
+        api = RetrofitMan.get();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);

@@ -34,7 +34,6 @@ public class ItemOrderFragment extends Fragment {
     private int mColumnCount = 1;
     private ItemOrderInteractionListener mListener;
 
-    RetrofitMan rf;
     APIStore api;
     ArrayList<Product> products_list = new ArrayList<>();
     MyItemOrderRecyclerViewAdapter mcrva = new MyItemOrderRecyclerViewAdapter(products_list, mListener);
@@ -61,8 +60,7 @@ public class ItemOrderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rf.init(getActivity());
-        api = rf.get();
+        api = RetrofitMan.get();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
